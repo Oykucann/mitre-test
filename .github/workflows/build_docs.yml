@@ -36,12 +36,6 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-        
-      - name: 404.html & index.html file
-        shell: bash
-        run: |
-          cp latest/404.html .
-          cp latest/index.html .
 
       - name: Deploy with mike
         run: |
