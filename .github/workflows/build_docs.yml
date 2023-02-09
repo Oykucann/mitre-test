@@ -37,6 +37,14 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
         
+      - name: add index.html & 404.html file on main page
+        shell: bash
+        run: |
+          cp latest/404.html .
+          cp latest/index.html .
+          python3 -c "import sys;lines=sys.stdin.read();print lines.replace('../','')" < 404.html
+          python3 -c "import sys;lines=sys.stdin.read();print lines.replace('../','')" < index.html
+          
       - name: Deploy with mike
         run: |
           mike deploy --push --update-aliases ${{ steps.extract_branch.outputs.branch }} latest
